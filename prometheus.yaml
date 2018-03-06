@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+
+  labels:
+    monitor: django-monitor
+
+rule_files:
+- "django.rules"
+
+scrape_configs:
+- job_name: "django"
+  target_groups:
+  # This will need to be adjusted for each run of 'minikube service --url polls'
+  # [Unless can port-forward, but that is normally for pods rather than services.]
+  - targets: ["localhost:8000"]	
