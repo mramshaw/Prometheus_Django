@@ -32,25 +32,13 @@ There is also a [Docker image](https://hub.docker.com/r/prom/prometheus/):
 
 As usual, I do not recommend global installs:
 
-    $ pip install --user prometheus_client
-
-Verify the version:
-
-    $ pip list --format=legacy | grep prometheus-client
-
-[0.1.1]
-
-    $ pip install --user 
+    $ pip install --user -r requirements.txt
 
 [Replace `pip` with `pip3` for Python3.]
 
-Or simply use the `requirements.txt` file:
-
-    $ pip install --user -r requirements.txt
-
 ## Launch Prometheus
 
-Run it as follows:
+Run it as follows (as usual, Ctrl-C to kill):
 
     $ ./prometheus-2.1.0.linux-amd64/prometheus --config.file=prometheus.yaml
 
@@ -68,11 +56,16 @@ Instrumentation:
 
 ## Advanced Tutorials
 
+Prometheus has a sophisticated Query Language. The following articles from Prometheus
+co-creator Julius Volz provide a deep dive into this:
+
     https://www.digitalocean.com/community/tutorials/how-to-query-prometheus-on-ubuntu-14-04-part-1
 
     https://www.digitalocean.com/community/tutorials/how-to-query-prometheus-on-ubuntu-14-04-part-2
 
 ## To Do
+
+* [ ] Learn Prometheus's Query Language
 
 ## Credits
 

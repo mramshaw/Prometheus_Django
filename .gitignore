@@ -1,3 +1,5 @@
+**.py[co]
+
 data/
 prometheus-2.1.0.linux-amd64/
 prometheus-2.1.0.linux-amd64.tar.gz
