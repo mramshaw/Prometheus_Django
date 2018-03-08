@@ -177,7 +177,7 @@ This will launch a web server at:
 
 At this point, Prometheus should show our app as `DOWN`:
 
-![App_not_running](images/Django_not_running)
+![App_not_running](images/Django_not_running.png)
 
 ## Run our app
 
@@ -187,17 +187,17 @@ Lets launch our web app so Prometheus has something to track:
 
 At this point, Prometheus should show our app as `UP`:
 
-![App_running](images/Django_running)
+![App_running](images/Django_running.png)
 
 And there are 14 migrations unapplied:
 
-![Migrations_unapplied](images/Django_migrations_unapplied)
+![Migrations_unapplied](images/Django_migrations_unapplied.png)
 
 Lets run them:
 
     $ python manage.py migrate
 
-![Migrations_applied](images/Django_migrations_applied)
+![Migrations_applied](images/Django_migrations_applied.png)
 
 It's possible to do quite a bit with Prometheus, but for dashboarding Grafana may be a better choice.
 
