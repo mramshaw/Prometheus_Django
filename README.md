@@ -84,6 +84,8 @@ As usual, I do not recommend global installs:
     $
     ```
 
+    [This will create a `/metrics` endpoint for Prometheus to query.]
+
 ## Instrument Django backend (Postgres)
 
 Change DATABASES in `polls/polls/urls.py` as follows:
@@ -149,6 +151,9 @@ This will export 6 counters:
     django_model_updates_total{model="choice"}
     django_model_deletes_total{model="choice"}
 
+These will show in the UI grouped as `django_model_inserts_total`, `django_model_updates_total`
+and `django_model_deletes_total`.
+
 Django migrations are also monitored. Two gauges are exported, `django_migrations_applied_by_connection`
 and `django_migrations_unapplied_by_connection`. It may be desirable to alert if there are unapplied migrations.
 
@@ -164,7 +169,37 @@ Run it as follows (as usual, Ctrl-C to kill):
 
     $ ./prometheus-2.1.0.linux-amd64/prometheus --config.file=prometheus.yaml
 
-[This will create a `data` directory for the prometheus stats.]
+This will launch a web server at:
+
+    0.0.0.0:9090
+
+[It will also create a `data` directory for the prometheus stats.]
+
+At this point, Prometheus should show our app as `DOWN`:
+
+![App_not_running](images/Django_not_running)
+
+## Run our app
+
+Lets launch our web app so Prometheus has something to track:
+
+    $ python manage.py runserver
+
+At this point, Prometheus should show our app as `UP`:
+
+![App_running](images/Django_running)
+
+And there are 14 migrations unapplied:
+
+![Migrations_unapplied](images/Django_migrations_unapplied)
+
+Lets run them:
+
+    $ python manage.py migrate
+
+![Migrations_applied](images/Django_migrations_applied)
+
+It's possible to do quite a bit with Prometheus, but for dashboarding Grafana may be a better choice.
 
 ## Prometheus best practices:
 
