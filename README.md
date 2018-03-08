@@ -36,6 +36,118 @@ As usual, I do not recommend global installs:
 
 [Replace `pip` with `pip3` for Python3.]
 
+## Instrument Django
+
+1. Change INSTALLED_APPS and MIDDLEWARE in `polls/polls/settings.py` as follows:
+
+    $ diff -uw ../Cloud_Django/polls/polls/settings.py polls/polls/settings.py
+    --- ../Cloud_Django/polls/polls/settings.py	2018-03-05 19:44:19.563484080 -0800
+    +++ polls/polls/settings.py	2018-03-06 13:52:20.469803146 -0800
+    @@ -39,9 +39,11 @@
+         'django.contrib.sessions',
+         'django.contrib.messages',
+         'django.contrib.staticfiles',
+    +    'django_prometheus',
+     ]
+     
+     MIDDLEWARE = [
+    +    'django_prometheus.middleware.PrometheusBeforeMiddleware',
+         'django.middleware.security.SecurityMiddleware',
+         'django.contrib.sessions.middleware.SessionMiddleware',
+         'django.middleware.common.CommonMiddleware',
+    @@ -49,6 +51,7 @@INSTALLED_APPS
+         'django.contrib.auth.middleware.AuthenticationMiddleware',
+         'django.contrib.messages.middleware.MessageMiddleware',
+         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    +    'django_prometheus.middleware.PrometheusAfterMiddleware',
+     ]
+     
+     ROOT_URLCONF = 'polls.urls'
+    $
+
+    Note that `PrometheusBeforeMiddleware` and `PrometheusAfterMiddleware` must sandwich the middleware exactly as shown.
+
+2. Change `polls/polls/urls.py` as follows:
+
+    $ diff -uw ../Cloud_Django/polls/polls/urls.py polls/polls/urls.py
+    --- ../Cloud_Django/polls/polls/urls.py	2018-02-11 14:45:15.909210000 -0800
+    +++ polls/polls/urls.py	2018-03-06 13:40:28.043185705 -0800
+    @@ -20,4 +20,5 @@
+     urlpatterns = [
+         url(r'^polls/', include('polls_app.urls')),
+         url(r'^admin/', admin.site.urls),
+    +    url('', include('django_prometheus.urls')),
+     ]
+    $
+
+## Instrument Django backend (Postgres)
+
+1. Change DATABASES in `polls/polls/urls.py` as follows:
+
+    $ diff -uw ../Cloud_Django/polls/polls/settings.py polls/polls/settings.py
+    --- ../Cloud_Django/polls/polls/settings.py	2018-03-05 19:44:19.563484080 -0800
+    +++ polls/polls/settings.py	2018-03-06 13:52:20.469803146 -0800
+    @@ -77,11 +80,11 @@
+     
+     DATABASES = {
+         'default': {
+    -        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    +        'ENGINE': 'django_prometheus.db.backends.postgresql',
+             'NAME': 'polls',
+             'USER': 'postgres',
+             'PASSWORD': 'postgres',
+             'HOST': '127.0.0.1',
+             'PORT': 5432
+         }
+     }
+    $
+
+## Instrument Django models
+
+Change `polls/polls_app/models.py` as follows:
+
+    $ diff -uw ../Cloud_Django/polls/polls_app/models.py polls/polls_app/models.py
+    --- ../Cloud_Django/polls/polls_app/models.py	2018-02-11 16:46:40.063097000 -0800
+    +++ polls/polls_app/models.py	2018-03-06 13:44:18.300155164 -0800
+    @@ -4,9 +4,12 @@
+     from django.db import models
+     from django.utils.encoding import python_2_unicode_compatible
+     
+    +from django_prometheus.models import ExportModelOperationsMixin
+    +
+     
+     @python_2_unicode_compatible
+    -class Question(models.Model):
+    +#class Question(models.Model):
+    +class Question(ExportModelOperationsMixin('question'), models.Model):
+         question_text = models.CharField(max_length=200)
+         pub_date = models.DateTimeField('date published')
+         def __str__(self):
+    @@ -14,7 +17,8 @@
+     
+     
+     @python_2_unicode_compatible
+    -class Choice(models.Model):
+    +#class Choice(models.Model):
+    +class Choice(ExportModelOperationsMixin('choice'), models.Model):
+         question = models.ForeignKey(Question, on_delete=models.CASCADE)
+         choice_text = models.CharField(max_length=200)
+         votes = models.IntegerField(default=0)
+    $
+
+This will export 6 counters:
+
+    django_model_inserts_total{model="question"}
+    django_model_updates_total{model="question"}
+    django_model_deletes_total{model="question"}
+
+    django_model_inserts_total{model="choice"}
+    django_model_updates_total{model="choice"}
+    django_model_deletes_total{model="choice"}
+
+Django migrations are also monitored. Two gauges are exported, `django_migrations_applied_by_connection`
+and `django_migrations_unapplied_by_connection`. It may be desirable to alert if there are unapplied migrations.
+
 ## Launch Prometheus
 
 Run it as follows (as usual, Ctrl-C to kill):
@@ -62,6 +174,17 @@ co-creator Julius Volz provide a deep dive into this:
     https://www.digitalocean.com/community/tutorials/how-to-query-prometheus-on-ubuntu-14-04-part-1
 
     https://www.digitalocean.com/community/tutorials/how-to-query-prometheus-on-ubuntu-14-04-part-2
+
+## Versions
+
+* Django 1.11.10
+* Docker 17.12.1-ce (Client and Server)
+* kubectl (Client: v1.8.6, Server: v1.9.0)
+* Kubernetes v1.9.0
+* minikube v0.25.0
+* psycopg2 2.7.4
+* Python 2.7.12
+* PostgreSQL 10.2
 
 ## To Do
 
