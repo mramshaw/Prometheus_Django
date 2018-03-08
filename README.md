@@ -151,7 +151,7 @@ This will export 6 counters:
     django_model_updates_total{model="choice"}
     django_model_deletes_total{model="choice"}
 
-These will show in the UI grouped as `django_model_inserts_total`, `django_model_updates_total`
+These will show in the Prometheus UI grouped as `django_model_inserts_total`, `django_model_updates_total`
 and `django_model_deletes_total`.
 
 Django migrations are also monitored. Two gauges are exported, `django_migrations_applied_by_connection`
@@ -160,7 +160,7 @@ and `django_migrations_unapplied_by_connection`. It may be desirable to alert if
 ## Instrument Django application code
 
 At this point we could instrument our application code, however we have already managed to get quite a lot
-of visibility into our application with a fairly minimal effort. We can instrumant our application code
+of visibility into our application with a fairly minimal effort. We can instrument our application code
 ___as needed___ from this point forward.
 
 ## Launch Prometheus
