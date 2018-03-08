@@ -88,7 +88,6 @@ As usual, I do not recommend global installs:
 
 Change DATABASES in `polls/polls/urls.py` as follows:
 
-    ```
     $ diff -uw ../Cloud_Django/polls/polls/settings.py polls/polls/settings.py
     --- ../Cloud_Django/polls/polls/settings.py	2018-03-05 19:44:19.563484080 -0800
     +++ polls/polls/settings.py	2018-03-06 13:52:20.469803146 -0800
@@ -106,13 +105,11 @@ Change DATABASES in `polls/polls/urls.py` as follows:
          }
      }
     $
-    ```
 
 ## Instrument Django models
 
 Change `polls/polls_app/models.py` as follows:
 
-    ```
     $ diff -uw ../Cloud_Django/polls/polls_app/models.py polls/polls_app/models.py
     --- ../Cloud_Django/polls/polls_app/models.py	2018-02-11 16:46:40.063097000 -0800
     +++ polls/polls_app/models.py	2018-03-06 13:44:18.300155164 -0800
@@ -141,7 +138,6 @@ Change `polls/polls_app/models.py` as follows:
          choice_text = models.CharField(max_length=200)
          votes = models.IntegerField(default=0)
     $
-    ```
 
 This will export 6 counters:
 
@@ -155,6 +151,12 @@ This will export 6 counters:
 
 Django migrations are also monitored. Two gauges are exported, `django_migrations_applied_by_connection`
 and `django_migrations_unapplied_by_connection`. It may be desirable to alert if there are unapplied migrations.
+
+## Instrument Django application code
+
+At this point we could instrument our application code, however we have already managed to get quite a lot
+of visibility into our application with a fairly minimal effort. We can instrumant our application code
+___as needed___ from this point forward.
 
 ## Launch Prometheus
 
