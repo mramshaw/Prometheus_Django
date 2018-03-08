@@ -211,7 +211,11 @@ Instrumentation:
 
     https://prometheus.io/docs/practices/instrumentation/
 
-## Advanced Tutorials
+## Training
+
+Robust Perception offers a free introduction to Prometheus:
+
+    https://training.robustperception.io/p/introduction-to-prometheus
 
 Prometheus has a sophisticated Query Language. The following articles from Prometheus
 co-creator Julius Volz provide a deep dive into this:
@@ -222,6 +226,7 @@ co-creator Julius Volz provide a deep dive into this:
 
 ## Versions
 
+* Prometheus 2.1.0
 * Django 1.11.10
 * Docker 17.12.1-ce (Client and Server)
 * kubectl (Client: v1.8.6, Server: v1.9.0)
