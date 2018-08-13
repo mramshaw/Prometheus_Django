@@ -2,6 +2,8 @@
 
 Instrumenting a Django server with [Prometheus](https://prometheus.io/).
 
+[Amazon customers seeking distributed tracing should probably have a look at [X-Ray](https://aws.amazon.com/xray/) first.]
+
 ## Motivation
 
 Prometheus is a monitoring and visualization tool that can easily be used to instrument Kubernetes.
