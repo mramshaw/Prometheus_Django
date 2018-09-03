@@ -1,5 +1,7 @@
 # Prometheus Django
 
+[![Known Vulnerabilities](https://snyk.io/test/github/mramshaw/Prometheus_Django/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/mramshaw/Prometheus_Django?targetFile=requirements.txt)
+
 Instrumenting a Django server with [Prometheus](https://prometheus.io/).
 
 [Amazon customers seeking distributed tracing should probably have a look at [X-Ray](https://aws.amazon.com/xray/) first.]
