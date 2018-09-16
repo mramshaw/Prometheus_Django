@@ -1,6 +1,6 @@
 # Prometheus Django
 
-[![Known Vulnerabilities](https://snyk.io/test/github/mramshaw/Prometheus_Django/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/mramshaw/Prometheus_Django?targetFile=requirements.txt)
+[![Known Vulnerabilities](https://snyk.io/test/github/mramshaw/Prometheus_Django/badge.svg?style=plastic&targetFile=requirements.txt)](https://snyk.io/test/github/mramshaw/Prometheus_Django?style=plastic&targetFile=requirements.txt)
 
 Instrumenting a Django server with [Prometheus](https://prometheus.io/).
 
