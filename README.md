@@ -203,7 +203,7 @@ Lets run them:
 
 ![Migrations_applied](images/Django_migrations_applied.png)
 
-It's possible to do quite a bit with Prometheus, but for dashboarding Grafana may be a better choice.
+It's possible to do quite a bit with Prometheus, but for dashboarding [Grafana](http://grafana.com/) may be a better choice.
 
 ## Prometheus best practices:
 
@@ -230,15 +230,15 @@ co-creator Julius Volz provide a deep dive into this:
 
 ## Versions
 
-* Prometheus 2.1.0
-* Django 1.11.10
-* Docker 17.12.1-ce (Client and Server)
-* kubectl (Client: v1.8.6, Server: v1.9.0)
-* Kubernetes v1.9.0
-* minikube v0.25.0
-* psycopg2 2.7.4
-* Python 2.7.12
-* PostgreSQL 10.2
+* Prometheus __2.1.0__
+* Django __1.11.10__
+* Docker __17.12.1-ce__ (Client and Server)
+* kubectl (Client: __v1.8.6__, Server: __v1.9.0__)
+* Kubernetes __v1.9.0__
+* minikube __v0.25.0__
+* psycopg2 __2.7.4__
+* Python __2.7.12__
+* PostgreSQL __10.2__
 
 ## To Do
 
